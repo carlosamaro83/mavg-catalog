@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import Catalog from "./components/Catalog.jsx";
 
 export default function App() {
-  // URL del script de Google Apps Script (tu backend)
-  const API_URL = "https://script.google.com/macros/s/AKfycbzj5Eh2ZNdjpfyNYsntue9_47JxjI0sqltlAwWppjHS3v_l_lrvMXjSuESXH8kXwqY/exec";
+  // ✅ Tu URL oficial de Google Apps Script
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbzj5Eh2ZNdjpfyNYsntue9_47JxjI0sqltlAwWppjHS3v_l_lrvMXjSuESXH8kXwqY/exec";
 
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,15 +15,21 @@ export default function App() {
       try {
         setLoading(true);
         const res = await fetch(API_URL);
+        if (!res.ok) throw new Error("Error en la respuesta del servidor");
         const data = await res.json();
         setTracks(data);
       } catch (e) {
-        console.error("Error cargando canciones:", e);
+        console.error("❌ Error cargando canciones:", e);
       } finally {
         setLoading(false);
       }
     }
+
     fetchTracks();
+
+    // 🔁 Opcional: refrescar cada 60 segundos automáticamente
+    const interval = setInterval(fetchTracks, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -35,9 +42,9 @@ export default function App() {
               alt="Logo"
               className="app-logo"
               style={{
-                height: "70px",
+                height: "80px",
                 width: "auto",
-                marginRight: "10px",
+                marginRight: "15px",
               }}
             />
             <h1>
