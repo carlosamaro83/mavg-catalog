@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Catalog from "./components/Catalog.jsx";
 
 export default function App() {
-  // URL del script de Google Apps Script (tu backend)
+  // ✅ URL actualizada del script de Google Apps Script
   const API_URL = "https://script.google.com/macros/s/AKfycbzj5Eh2ZNdjpfyNYsntue9_47JxjI0sqltlAwWppjHS3v_l_lrvMXjSuESXH8kXwqY/exec";
 
   const [tracks, setTracks] = useState([]);
