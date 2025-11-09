@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Catalog from "./components/Catalog.jsx";
 
 export default function App() {
-  // ✅ URL actualizada del script de Google Apps Script
-  const API_URL = "https://script.google.com/macros/s/AKfycbzj5Eh2ZNdjpfyNYsntue9_47JxjI0sqltlAwWppjHS3v_l_lrvMXjSuESXH8kXwqY/exec";
+  // URL del script de Google Apps Script (tu backend)
+  const API_URL = "https://script.google.com/macros/s/AKfycbz2CDOe6-mhOBzTntmyTLU73kc-m2E3P50yyfWaumMCh-JuxarIoaUd4ceAKIPIHzM9/exec";
 
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
