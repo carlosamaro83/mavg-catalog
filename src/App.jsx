@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Catalog from "./components/Catalog.jsx";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzj5Eh2ZNdjpfyNYsntue9_47JxjI0sqltlAwWppjHS3v_l_lrvMXjSuESXH8kXwqY/exec";
-
 export default function App() {
+  // URL del script de Google Apps Script (tu backend)
+  const API_URL = "https://script.google.com/macros/s/AKfycbz2CDOe6-mhOBzTntmyTLU73kc-m2E3P50yyfWaumMCh-JuxarIoaUd4ceAKIPIHzM9/exec";
+
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // 🔹 Cargar canciones desde Google Sheets
   useEffect(() => {
     async function fetchTracks() {
       try {
         setLoading(true);
-        const res = await fetch(API_URL, { cache: "no-store" });
+        const res = await fetch(API_URL);
         const data = await res.json();
-        setTracks(Array.isArray(data) ? data : []);
+        setTracks(data);
       } catch (e) {
-        console.error("Error cargando catalogo:", e);
+        console.error("Error cargando canciones:", e);
       } finally {
         setLoading(false);
       }
@@ -28,28 +30,32 @@ export default function App() {
       <nav className="navbar">
         <div className="container navrow">
           <div className="brand">
-            <img src="/logo.png" alt="Logo" />
-            <h1>Mundo Audiovisual <span>Music Gallery</span></h1>
+            <img
+              src={`${import.meta.env.BASE_URL}logo.png`}
+              alt="Logo"
+              className="app-logo"
+              style={{
+                height: "70px",
+                width: "auto",
+                marginRight: "10px",
+              }}
+            />
+            <h1>
+              Mundo Audiovisual <span>Music Gallery</span>
+            </h1>
           </div>
-          <div style={{opacity:.6,fontSize:12}}>Catalogo online</div>
         </div>
       </nav>
 
       <main className="container" style={{ width: "100%" }}>
         {loading ? (
-          <div className="card" style={{ textAlign: "center", padding: 24 }}>
-            <div className="loader">
-              <div className="spinner" />
-              <div style={{ fontWeight: 700 }}>Cargando...</div>
-            </div>
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <div style={{ fontWeight: 600, marginTop: 10 }}>Cargando...</div>
           </div>
         ) : (
           <Catalog tracks={tracks} />
         )}
-
-        <div className="footer-hint">
-          Alimenta el catalogo desde tu <span className="kbd">Google Form</span> vinculado.
-        </div>
       </main>
     </div>
   );
